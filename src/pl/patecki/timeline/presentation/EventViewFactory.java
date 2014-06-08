@@ -3,6 +3,7 @@ package pl.patecki.timeline.presentation;
 import java.text.SimpleDateFormat;
 
 import pl.patecki.timeline.R;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ public class EventViewFactory {
 	private int rowViewID;
 	private int shortestEventDistance;
 
+	@SuppressLint("SimpleDateFormat")
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	private LayoutInflater inflater;
 	private Context context;

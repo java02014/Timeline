@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="HorizontalTimeLine">
+        <attr name="minimal_event_width" format="dimension" />
+        <attr name="maximal_event_width" format="dimension" />
+    </declare-styleable>
+    
+    <!-- As for now we dont declare child views
+    <declare-styleable name="FlowLayout_LayoutParams">
+    	<attr name="layout_breakLine" format="boolean" />
+        <attr name="layout_horizontalSpacing" format="dimension" />
+    </declare-styleable>
+     -->
+</resources>

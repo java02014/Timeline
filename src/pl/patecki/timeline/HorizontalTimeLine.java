@@ -11,6 +11,7 @@ import pl.patecki.timeline.presentation.LengthNormalizer;
 import pl.patecki.timeline.presentation.LogarythmicTimeConverter;
 import pl.patecki.timeline.presentation.TimeConverter;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -21,6 +22,8 @@ public class HorizontalTimeLine extends HorizontalScrollView implements Calendar
 	
 	private ArrayList<CalendarEventPresentation> calendarPresentationEvents = new ArrayList<CalendarEventPresentation>();
 	private int viewLength = 200;
+	private int maxViewLength = Integer.MAX_VALUE;
+	private long minimalNonZeroTimeDistance = Long.MAX_VALUE;
 	private TimeConverter timeConverter;
 	private LengthNormalizer lengthNormalizer;
 	private EventViewFactory eventViewFactory;
@@ -32,9 +35,23 @@ public class HorizontalTimeLine extends HorizontalScrollView implements Calendar
 
 	public HorizontalTimeLine(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		readAttributes(attrs);
 		init();
 	}
 	
+	private void readAttributes(AttributeSet attrs) {
+		
+		TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.HorizontalTimeLine);
+		try {
+			viewLength = typedArray.getDimensionPixelSize(R.styleable.HorizontalTimeLine_minimal_event_width, 0);
+			if (log) Log.d(TAG, "Event minimal length: " + viewLength);
+			maxViewLength = typedArray.getDimensionPixelSize(R.styleable.HorizontalTimeLine_maximal_event_width, Integer.MAX_VALUE);
+			if (log) Log.d(TAG, "Event maximal length: " + maxViewLength);
+		} finally {
+			typedArray.recycle();
+		}		
+	}
+
 	@Override
 	public boolean setData(Cursor cursor, boolean isSorted) {
 		// TODO Auto-generated method stub
@@ -57,39 +74,32 @@ public class HorizontalTimeLine extends HorizontalScrollView implements Calendar
 		
 		if (!isSorted)
 	        Collections.sort(eventList);
-		
-		int iCurrent = 0;
-		long minimalTimeDistance = Long.MAX_VALUE;
-		for (CalendarEvent calendarEvent : eventList){
-
-			CalendarEventPresentation calendarEventPresentation = new CalendarEventPresentation(calendarEvent, (iCurrent == 0)? null : eventList.get(iCurrent - 1));
-			calendarPresentationEvents.add(calendarEventPresentation);
-			long timeAfterPrevious = calendarEventPresentation.getTimeAfterPrevious();
-			Log.d("time", "time after previous: " + timeAfterPrevious);
-			Log.d("time", "time converted " +  timeConverter.getConvertedTime( /*Math.min(minimalTimeDistance, timeAfterPrevious)*/ timeAfterPrevious ));
-			if (timeAfterPrevious > 0)
-				minimalTimeDistance = Math.min(minimalTimeDistance, timeConverter.getConvertedTime(timeAfterPrevious) );
-			iCurrent++;
-			
-		}
-		lengthNormalizer = new LengthNormalizer(viewLength, minimalTimeDistance);
-		
-		for(CalendarEventPresentation cep : calendarPresentationEvents)
-			Log.d(TAG, "length: " + lengthNormalizer.getNormalizedSize( timeConverter.getConvertedTime( cep.getTimeAfterPrevious()) ));
-		
-		if (log)
-			Log.d(TAG, "Events succesfully loaded");
-		
-		populate();
+		createPresentationEvents(eventList);
+		lengthNormalizer = new LengthNormalizer(viewLength, minimalNonZeroTimeDistance);
+		if (log) Log.d(TAG, "Events succesfully loaded");
+		createViews();
 		return true;
 	}
 	
-	private void populate(){
+	private void createPresentationEvents(List<CalendarEvent> eventList){
+		
+		long minimalTimeDistance = Long.MAX_VALUE;
+		for (int i=0; i < eventList.size(); i++){
+
+			CalendarEventPresentation calendarEventPresentation = new CalendarEventPresentation(eventList.get(i), (i == 0)? null : eventList.get(i - 1));
+			calendarPresentationEvents.add(calendarEventPresentation);
+			long timeAfterPrevious = calendarEventPresentation.getTimeAfterPrevious();
+			if (log) Log.d("time", "time after previous: " + timeAfterPrevious);
+			if (log) Log.d("time", "time converted " +  timeConverter.getConvertedTime( timeAfterPrevious ));
+			if (timeAfterPrevious > 0)
+				minimalTimeDistance = Math.min(minimalTimeDistance, timeConverter.getConvertedTime(timeAfterPrevious) );
+		}
+	}
+	
+	private void createViews(){
 		
 		eventViewFactory = new EventViewFactory(getContext(), timeConverter, lengthNormalizer, R.layout.event_layout_basic, viewLength);
-		
 		for (CalendarEventPresentation currentPresentationEvent : calendarPresentationEvents){
-			Log.d("asd","asd");
 			scrollContainer.addView(eventViewFactory.getView(currentPresentationEvent, null /* no view recycling yet */));
 		}
 		this.requestLayout();
