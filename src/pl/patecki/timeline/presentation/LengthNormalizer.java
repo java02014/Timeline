@@ -17,8 +17,12 @@ public class LengthNormalizer{
 		Log.d("ratio","ratio " + ratio + " " + viewSize + " " + minimalTimeDistance);
 	}
 	
-	public long getNormalizedSize(long timeAfterPrevious){
+	public int getNormalizedSize(long timeAfterPrevious){
 		
-		return (long)(timeAfterPrevious * ratio);
+		return (int)(timeAfterPrevious * ratio);
+	}
+	
+	public int getMinimalLength(){
+		return viewSize;
 	}
 }

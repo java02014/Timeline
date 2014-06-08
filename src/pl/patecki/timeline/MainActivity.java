@@ -49,9 +49,17 @@ public class MainActivity extends Activity {
 		event2.set(Calendar.DAY_OF_MONTH, 5);
 		Calendar event3 = Calendar.getInstance();
 		event3.set(Calendar.MONTH, 7);
+		Calendar event4 = Calendar.getInstance();
+		event4.set(Calendar.MONTH, 10);
+		event4.set(Calendar.YEAR, 2015);
+		Calendar event5 = Calendar.getInstance();
+		event5.set(Calendar.MONTH, 11);
+		event5.set(Calendar.YEAR, 2015);
 		list.add(new CalendarEvent(event1, "National holiday", null, null));
 		list.add(new CalendarEvent(event2, "Polsih HOliday", null, null));
 		list.add(new CalendarEvent(event3, "Krakow holiday", null, null));
+		list.add(new CalendarEvent(event4, "Got drunk", null, null));
+		list.add(new CalendarEvent(event5, "Party hard", null, null));
 		Collections.sort(list);
 
 		horizontalTimeLine.setData(list, true);

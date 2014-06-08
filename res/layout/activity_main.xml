@@ -9,6 +9,7 @@
     tools:context=".MainActivity" >
 
 	<pl.patecki.timeline.HorizontalTimeLine 
+	    android:orientation="horizontal"
 	    android:layout_width="300dp"
 	    android:id="@+id/horizontal"
 	    android:layout_height="300dp">
