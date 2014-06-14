@@ -8,6 +8,7 @@ import android.database.Cursor;
 public interface CalendarDataInput {
 
 	/**
+	 * @param cursor - Cursor object with default column names YEAR, MONTH, DAY
 	 * @param isSorted - if set to true events are already sorted
 	 * @return true if data is correct to display, false otherwise
 	 */

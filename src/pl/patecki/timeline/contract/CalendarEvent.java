@@ -1,10 +1,12 @@
 package pl.patecki.timeline.contract;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
 
 public class CalendarEvent implements Comparable<CalendarEvent> {
 
-	private long timeMilis;
+	private DateTime dateTime;
+
 	private String label;
 	private String description;
 	private String media;
@@ -15,10 +17,9 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
 	 * @param description - null is accepted
 	 * @param media - null is accepted
 	 */
-	public CalendarEvent(long timeMilis, String label, String description,
+	public CalendarEvent(String label, String description,
 			String media) {
 		super();
-		this.timeMilis = timeMilis;
 		this.label = label;
 		this.description = description;
 		this.media = media;
@@ -30,22 +31,30 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
 	 * @param description - null is accepted
 	 * @param media - null is accepted
 	 */
-	public CalendarEvent(Calendar date, String label, String description,
+	public CalendarEvent(DateTime dateTime, String label, String description,
 			String media) {
 		super();
-		this.timeMilis = date.getTimeInMillis();
+		this.dateTime = dateTime;
 		this.label = label;
 		this.description = description;
 		this.media = media;
 	}
 	
+	public CalendarEvent(DateTime dateTime, String[] details) {
+		super();
+		this.dateTime = dateTime;
+		this.label = details[0];
+		this.description = details[1];
+		this.media = details[2];
+	}
+	
 	public CalendarEvent(){}
 
-	public long getTime() {
-		return timeMilis;
+	public DateTime getDateTime() {
+		return dateTime;
 	}
-	public void setTime(long time) {
-		this.timeMilis = time;
+	public void setDateTime(DateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 	public String getLabel() {
 		return label;
@@ -69,10 +78,6 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
 	@Override
 	public int compareTo(CalendarEvent another) {
 		
-		if (this.timeMilis > another.timeMilis)
-			return 1;
-		else if (this.timeMilis < another.timeMilis)
-			return -1;
-		return 0;
+		return DateTimeComparator.getDateOnlyInstance().compare(this.dateTime, another.dateTime);
 	}
 }

@@ -26,22 +26,6 @@ public class MainActivity extends Activity {
 		
 		HorizontalTimeLine horizontalTimeLine = (HorizontalTimeLine) findViewById(R.id.horizontal);
 		
-		Calendar minEvent = Calendar.getInstance();
-		minEvent.set(Calendar.YEAR, 20000);
-		
-		Calendar maxEvent = Calendar.getInstance();
-		maxEvent.set(Calendar.YEAR, -20000);
-		DateTime datetime = DateTime.now();
-//		DateTime datetime2 = DateTime.now();
-//		datetime2.minusYears(20);
-		Calendar c = Calendar.getInstance();
-		c.set(1998, 3, 3);
-		DateTime dt2 = new DateTime(c);
-		Period p = new Period(dt2, datetime);
-		Log.d("period","period " + p.getYears());
-		
-		Log.d("period","period " + Years.yearsBetween(datetime, dt2));
-		
 		List<CalendarEvent> list = new ArrayList<CalendarEvent>();
 		Calendar event1 = Calendar.getInstance();
 		event1.set(Calendar.DAY_OF_MONTH, 3);
@@ -55,11 +39,11 @@ public class MainActivity extends Activity {
 		Calendar event5 = Calendar.getInstance();
 		event5.set(Calendar.MONTH, 11);
 		event5.set(Calendar.YEAR, 2015);
-		list.add(new CalendarEvent(event1, "National holiday", null, null));
-		list.add(new CalendarEvent(event2, "Polsih HOliday", null, null));
-		list.add(new CalendarEvent(event3, "Krakow holiday", null, null));
-		list.add(new CalendarEvent(event4, "Got drunk", null, null));
-		list.add(new CalendarEvent(event5, "Party hard", null, null));
+		list.add(new CalendarEvent(new DateTime(event1), "National holiday", null, null));
+		list.add(new CalendarEvent(new DateTime(event2), "Polsih HOliday", null, null));
+		list.add(new CalendarEvent(new DateTime(event3), "Krakow holiday", null, null));
+		list.add(new CalendarEvent(new DateTime(event4), "Got drunk", null, null));
+		list.add(new CalendarEvent(new DateTime(event5), "Party hard", null, null));
 		Collections.sort(list);
 
 		horizontalTimeLine.setData(list, true);
