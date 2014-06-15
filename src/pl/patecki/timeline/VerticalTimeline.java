@@ -1,6 +1,5 @@
 package pl.patecki.timeline;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.patecki.timeline.contract.CalendarEvent;
@@ -33,7 +32,6 @@ public class VerticalTimeline extends ListView implements CalendarDataInput{
 
 	@Override
 	public boolean setData(Cursor cursor, boolean isSorted) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

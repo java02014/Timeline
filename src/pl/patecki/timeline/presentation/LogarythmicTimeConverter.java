@@ -30,13 +30,23 @@ public class LogarythmicTimeConverter implements TimeConverter {
 		this.minimalTimeDistance = minimalTimeDistance;
 		ratio = ((double) viewSize / this.minimalTimeDistance);
 		if (log)
-			Log.d(TAG, "ratio " + ratio + " View size: " + viewSize + " Minimal time distance: " + minimalTimeDistance);
+			Log.d(TAG, "Ratio " + ratio + " View size: " + viewSize + " Minimal time distance: " + minimalTimeDistance);
 		hasAllData = true;
 	}
 	
 	@Override
 	public int getNormalizedSize(long timeAfterPrevious){
 		return (int)(timeAfterPrevious * ratio);
+	}
+	
+	@Override
+	public int getRatioForTimeUnit(long timeDistance, long timeUnit) {
+		
+		if (timeDistance > 0){
+			long convertedDistance = (long) Math.max(1 , Math.log(timeDistance) );
+			return (int)(ratio * (convertedDistance * timeUnit) / timeDistance);
+		}
+		return -1;
 	}
 	
 	@Override

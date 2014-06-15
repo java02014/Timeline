@@ -30,9 +30,11 @@ public interface TimeConverter {
 	 * @return - length unit
 	 */
 	int getNormalizedSize(long timeAfterPrevious);
-
+	
 	double getRatio();
 	
 	boolean hasAllData();
+	
+	int getRatioForTimeUnit(long timeDistance, long timeUnit);
 	
 }

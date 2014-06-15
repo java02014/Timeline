@@ -1,6 +1,7 @@
 package pl.patecki.timeline.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -60,8 +61,8 @@ public class PresentationEventsData {
 		}
 		hasData = true;
 		Log.d("minmax","minmax " + minTimeDistance + " " + maxTimeDistance);
-//		if (!isSorted)
-//		Collections.sort(dateTimes);
+		if (!isSorted)
+			Collections.sort(presentationEvents);
 	}
 	
 	private void reset(){

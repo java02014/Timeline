@@ -6,15 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.joda.time.Years;
 
 import pl.patecki.timeline.contract.CalendarEvent;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.text.method.DateTimeKeyListener;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.Menu;
 
 public class MainActivity extends Activity {

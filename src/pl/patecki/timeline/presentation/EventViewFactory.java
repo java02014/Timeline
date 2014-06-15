@@ -3,7 +3,6 @@ package pl.patecki.timeline.presentation;
 import java.text.SimpleDateFormat;
 
 import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatterBuilder;
 
 import pl.patecki.timeline.R;
 import android.annotation.SuppressLint;
@@ -45,11 +44,15 @@ public class EventViewFactory {
 		time.setText(eventPresentation.getCalendarEvent().getDateTime().toString(DateTimeFormat.forPattern("YYY - MM - d")));
 		TextView title = (TextView) convertView.findViewById(R.id.title_field);
 		title.setText(eventPresentation.getCalendarEvent().getLabel());
+		ScaleLineView lineView = (ScaleLineView)convertView.findViewById(R.id.lineView);
 		
 		long timeAfterPrevious = eventPresentation.getTimeAfterPrevious();
 		long convertedTime = timeConverter.getConvertedTime(timeAfterPrevious);
 		int length = (int) timeConverter.getNormalizedSize(convertedTime); 
 		Log.d("length","length " + length);
+		
+		lineView.setup(eventPresentation.getTimeMarks());
+		
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(  (length > timeConverter.getMinimalLength() )? length : timeConverter.getMinimalLength() , LayoutParams.MATCH_PARENT);
 		convertView.setLayoutParams(layoutParams);
 		return convertView;
