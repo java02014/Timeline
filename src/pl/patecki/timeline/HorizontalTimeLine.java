@@ -7,6 +7,7 @@ import pl.patecki.timeline.data.PresentationEventsData;
 import pl.patecki.timeline.presentation.CalendarEventPresentation;
 import pl.patecki.timeline.presentation.EventViewFactory;
 import pl.patecki.timeline.presentation.LogarythmicTimeConverter;
+import pl.patecki.timeline.presentation.OnItemClickListener;
 import pl.patecki.timeline.presentation.TimeConverter;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,15 +17,16 @@ import android.util.Log;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
-public class HorizontalTimeLine extends HorizontalScrollView implements CalendarDataInput {
+public class HorizontalTimeLine extends HorizontalScrollView implements OnItemClickListener, CalendarDataInput{
 	
 	private PresentationEventsData presentationEventsData = new PresentationEventsData();
 	private int viewLength = 200;
 	private int maxViewLength = Integer.MAX_VALUE;
 	private TimeConverter timeConverter;
 	private EventViewFactory eventViewFactory;
-	
 	private LinearLayout scrollContainer;
+	
+	private OnItemClickListener onItemClickListener;
 	
 	private boolean log = true;
 	private String TAG = "HorizontalTimeLine";
@@ -84,6 +86,14 @@ public class HorizontalTimeLine extends HorizontalScrollView implements Calendar
 		}
 		this.requestLayout();
 	}
-
-
+	
+	@Override
+	public void onItemClicked(int position, CalendarEvent calendarEvent){
+		
+	}
+	
+	public void setOnItemClickListener(OnItemClickListener onItemClickedListener){
+		this.onItemClickListener = onItemClickedListener;
+	}
+	
 }
