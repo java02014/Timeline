@@ -20,15 +20,17 @@
         android:layout_below="@+id/time_field"
         android:textAppearance="?android:attr/textAppearanceSmall" />
     
-    <View
-        android:layout_below="@+id/title_field"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="#FF0000FF" />
-    
     <pl.patecki.timeline.presentation.ScaleLineView
+        android:layout_below="@+id/title_field"
         android:id="@+id/lineView"
         android:layout_width="fill_parent"
         android:layout_height="40dp" />
+    
+    <View
+        android:layout_below="@+id/lineView"
+        android:id="@+id/line"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="#FF0000FF" />
 
 </RelativeLayout>

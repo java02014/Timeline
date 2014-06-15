@@ -51,7 +51,6 @@ public class CalendarEventPresentation implements Comparable<CalendarEventPresen
 		
 		if (isOutsideRange <= 0){
 			// there is not enougth space to place marks
-			Log.d("months", "months between 0");
 			timeMarks = new Float[0];
 			return;
 		}
