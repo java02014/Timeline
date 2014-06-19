@@ -11,9 +11,9 @@
 
 	<pl.patecki.timeline.HorizontalTimeLine 
 	    android:orientation="horizontal"
-	    android:layout_width="300dp"
+	    android:layout_width="match_parent"
 	    android:id="@+id/horizontal"
-	    android:layout_height="300dp"
+	    android:layout_height="80dp"
 	    timeline:minimal_event_width="50dp">
 	    
 	</pl.patecki.timeline.HorizontalTimeLine>

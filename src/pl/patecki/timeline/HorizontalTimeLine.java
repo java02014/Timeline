@@ -14,8 +14,11 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 public class HorizontalTimeLine extends HorizontalScrollView implements OnItemClickListener, CalendarDataInput{
 	
@@ -24,7 +27,9 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	private int maxViewLength = Integer.MAX_VALUE;
 	private TimeConverter timeConverter;
 	private EventViewFactory eventViewFactory;
-	private LinearLayout scrollContainer;
+	private RelativeLayout scrollContainer;
+	private LinearLayout eventsContainer;
+	private LinearLayout timelineContainer;
 	
 	private OnItemClickListener onItemClickListener;
 	
@@ -54,7 +59,7 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	public boolean setData(Cursor cursor, boolean isSorted) {
 		
 		presentationEventsData.setData(cursor, isSorted);
-		timeConverter.setNormalizationData(200, presentationEventsData.getMinTimeDistance(), presentationEventsData.getMaxTimeDistance(), -1);
+		timeConverter.setNormalizationData(viewLength, presentationEventsData.getMinTimeDistance(), presentationEventsData.getMaxTimeDistance(), -1);
 		createViews();
 		return true;
 	}
@@ -62,10 +67,24 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	private void init(){
 		
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-		scrollContainer = new LinearLayout(getContext());
+		
+		scrollContainer = new RelativeLayout(getContext());
 		scrollContainer.setLayoutParams(layoutParams);
-		scrollContainer.setOrientation(LinearLayout.HORIZONTAL);
+		
+		eventsContainer = new LinearLayout(getContext());
+		eventsContainer.setLayoutParams(layoutParams);
+		eventsContainer.setOrientation(LinearLayout.HORIZONTAL);
+		
+		LayoutParams timelineLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		timelineContainer = new LinearLayout(getContext());
+		timelineContainer.setLayoutParams(timelineLayoutParams);
+		timelineContainer.setOrientation(LinearLayout.HORIZONTAL);
+		
+		scrollContainer.addView(eventsContainer);
+		scrollContainer.addView(timelineContainer);
+		
 		this.addView(scrollContainer);
+		
 		timeConverter = new LogarythmicTimeConverter();
 	}
 
@@ -80,11 +99,21 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	
 	private void createViews(){
 		
-		eventViewFactory = new EventViewFactory(getContext(), timeConverter, R.layout.event_layout_basic); 
+//		eventsContainer.setPadding(viewLength/2, 0, 0, 0);
+		eventViewFactory = new EventViewFactory(getContext(), timeConverter, R.layout.event_layout_basic, R.layout.timeline_layout_basic); 
 		for (CalendarEventPresentation currentPresentationEvent : presentationEventsData.getPresentationEvents()){
-			scrollContainer.addView(eventViewFactory.getView(currentPresentationEvent, null /* no view recycling yet */));
+			eventsContainer.addView(eventViewFactory.getEventView(currentPresentationEvent, null ));
+			timelineContainer.addView(eventViewFactory.getTimelineView(currentPresentationEvent, null ));
 		}
 		this.requestLayout();
+	}
+	
+	private void applyArrowEnd(){
+		
+	}
+	
+	private void applyArrowStart(){
+		
 	}
 	
 	@Override

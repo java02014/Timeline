@@ -32,16 +32,27 @@ public class MainActivity extends Activity {
 		event4.set(Calendar.MONTH, 10);
 		event4.set(Calendar.YEAR, 2015);
 		Calendar event5 = Calendar.getInstance();
+		event5.set(Calendar.DAY_OF_MONTH, 1);
 		event5.set(Calendar.MONTH, 11);
 		event5.set(Calendar.YEAR, 2015);
+		Calendar event6 = Calendar.getInstance();
+		event6.set(Calendar.DAY_OF_MONTH, 11);
+		event6.set(Calendar.MONTH, 11);
+		event6.set(Calendar.YEAR, 2015);
+		Calendar event7 = Calendar.getInstance();
+		event7.set(Calendar.DAY_OF_MONTH, 31);
+		event7.set(Calendar.MONTH, Calendar.JANUARY);
+		event7.set(Calendar.YEAR, 2016);
 		list.add(new CalendarEvent(new DateTime(event1), "National holiday", null, null));
 		list.add(new CalendarEvent(new DateTime(event2), "Polsih HOliday", null, null));
 		list.add(new CalendarEvent(new DateTime(event3), "Krakow holiday", null, null));
 		list.add(new CalendarEvent(new DateTime(event4), "Got drunk", null, null));
 		list.add(new CalendarEvent(new DateTime(event5), "Party hard", null, null));
+		list.add(new CalendarEvent(new DateTime(event6), "Party hard at month start", null, null));
+		list.add(new CalendarEvent(new DateTime(event7), "Party hard at month end, end end, end, start", null, null));
 		Collections.sort(list);
 
-		horizontalTimeLine.setData(list, true);
+		horizontalTimeLine.setData(list, false);
 	}
 
 	@Override

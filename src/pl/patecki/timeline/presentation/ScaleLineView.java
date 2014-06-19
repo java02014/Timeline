@@ -53,6 +53,6 @@ public class ScaleLineView extends View {
 	private void setupPaint() {
 		paint = new Paint();
 		paint.setColor(Color.BLUE);
-		paint.setStrokeWidth(4);
+		paint.setStrokeWidth(2);
 	}
 }
