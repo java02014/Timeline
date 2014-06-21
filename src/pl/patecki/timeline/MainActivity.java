@@ -47,8 +47,8 @@ public class MainActivity extends Activity {
 		list.add(new CalendarEvent(new DateTime(event2), "Polsih HOliday", null, null));
 		list.add(new CalendarEvent(new DateTime(event3), "Krakow holiday", null, null));
 		list.add(new CalendarEvent(new DateTime(event4), "Got drunk", null, null));
-		list.add(new CalendarEvent(new DateTime(event5), "Party hard", null, null));
-		list.add(new CalendarEvent(new DateTime(event6), "Party hard at month start", null, null));
+		list.add(new CalendarEvent(new DateTime(event5), "Party hard at month start", null, null));
+		list.add(new CalendarEvent(new DateTime(event6), "Party hard", null, null));
 		list.add(new CalendarEvent(new DateTime(event7), "Party hard at month end, end end, end, start", null, null));
 		Collections.sort(list);
 

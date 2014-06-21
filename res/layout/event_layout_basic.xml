@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:padding="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/time_field"
+        android:padding="5dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
@@ -28,6 +30,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:background="#0000ff" />
-    <!-- android:layout_marginRight="100dp" -->
 
 </RelativeLayout>

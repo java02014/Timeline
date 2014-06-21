@@ -12,6 +12,8 @@ public class ScaleLineView extends View {
 	
 	private Float[] timeMarks;
 	private Paint paint;
+	private float markerThickness = 2;
+	private float lineLength = 30;
 
 	public ScaleLineView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
@@ -41,8 +43,9 @@ public class ScaleLineView extends View {
 		int height = canvas.getHeight();
 		for (Float timeMark : timeMarks){
 			
-			float i = timeMark * width;
-			canvas.drawLine(i, height, i, height-40, paint);
+			float position = timeMark * width;
+			float safePosition = keepBounds(position, markerThickness, width);
+			canvas.drawLine(safePosition, height, safePosition, height - lineLength, paint);
 		}
 	}
 	
@@ -53,6 +56,19 @@ public class ScaleLineView extends View {
 	private void setupPaint() {
 		paint = new Paint();
 		paint.setColor(Color.BLUE);
-		paint.setStrokeWidth(2);
+		paint.setStrokeWidth(markerThickness);
+	}
+	
+	/**
+	 * @return make sure that no clipping occurs to lines
+	 */
+	private float keepBounds(float position, float thickness, int width){
+		
+		if (position - (thickness / 2) < 0){
+			return thickness/2;
+		} else if ( position + (thickness / 2) > width) {
+			return width - (thickness / 2);
+		}
+		return position;
 	}
 }

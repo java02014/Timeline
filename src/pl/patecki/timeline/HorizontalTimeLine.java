@@ -13,9 +13,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +23,8 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	
 	private PresentationEventsData presentationEventsData = new PresentationEventsData();
 	private int viewLength = 200;
+	private int markerSize = 10;
+	private float screenDensity = 1.5f; // Use HDPi as default
 	private int maxViewLength = Integer.MAX_VALUE;
 	private TimeConverter timeConverter;
 	private EventViewFactory eventViewFactory;
@@ -66,6 +67,9 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	
 	private void init(){
 		
+		DisplayMetrics metrics = getResources().getDisplayMetrics();
+		screenDensity = metrics.density;
+		
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
 		
 		scrollContainer = new RelativeLayout(getContext());
@@ -93,18 +97,26 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 		
 		presentationEventsData.setData(eventList, isSorted);
 		timeConverter.setNormalizationData(200, presentationEventsData.getMinTimeDistance(), presentationEventsData.getMaxTimeDistance(), -1);
+		clearViews();
 		createViews();
 		return true;
 	}
 	
+	private void clearViews(){
+		eventsContainer.removeAllViews();
+		timelineContainer.removeAllViews();
+	}
+	
 	private void createViews(){
 		
-//		eventsContainer.setPadding(viewLength/2, 0, 0, 0);
+		eventsContainer.setPadding((int)((markerSize / 2) * screenDensity), 0, 0, 0); // Compensate event marker thickness
 		eventViewFactory = new EventViewFactory(getContext(), timeConverter, R.layout.event_layout_basic, R.layout.timeline_layout_basic); 
 		for (CalendarEventPresentation currentPresentationEvent : presentationEventsData.getPresentationEvents()){
 			eventsContainer.addView(eventViewFactory.getEventView(currentPresentationEvent, null ));
 			timelineContainer.addView(eventViewFactory.getTimelineView(currentPresentationEvent, null ));
 		}
+		applyArrowEnd();
+		applyArrowStart();
 		this.requestLayout();
 	}
 	
