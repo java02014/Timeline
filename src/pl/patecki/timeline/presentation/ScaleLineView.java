@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class ScaleLineView extends View {
@@ -38,7 +39,7 @@ public class ScaleLineView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+		Log.d("draw","draw");
 		int width = canvas.getWidth();
 		int height = canvas.getHeight();
 		for (Float timeMark : timeMarks){

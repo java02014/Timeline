@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -67,6 +68,7 @@ public class HorizontalTimeLine extends HorizontalScrollView implements OnItemCl
 	
 	private void init(){
 		
+//		this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		DisplayMetrics metrics = getResources().getDisplayMetrics();
 		screenDensity = metrics.density;
 		
